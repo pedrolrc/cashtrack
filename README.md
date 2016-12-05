@@ -1,2 +1,2 @@
-# mystuffapp
-App to manage personal costs, tasks, bookmarks, and more
+# djangoserver
+Python Django server with different apps that I developed, such as a personal dashboard.
