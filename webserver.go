@@ -2,9 +2,12 @@ package main
 
 import (
 	"fmt"
+    "log"
 	"net/http"
 	"github.com/pedrolrc/cashtrack/cashcore"
 	"html/template"
+	"github.com/gorilla/mux"
+    "encoding/json"
 )
 
 type DefaultPage struct {
@@ -13,9 +16,9 @@ type DefaultPage struct {
 
 // Handling the URLs/Endpoints
 
-func handleIndex(respw http.ResponseWriter, req *http.Request) {
+func handleDashboardIndex(respw http.ResponseWriter, req *http.Request) {
 	// URL / was requested
-	fmt.Println("DEBUG :: handleIndex called")
+	fmt.Println("DEBUG :: Dashboard's Index called")
 
 	username := "Um lesk muito louco"
 
@@ -33,16 +36,42 @@ func handleIndex(respw http.ResponseWriter, req *http.Request) {
 	_ = tmp.Execute(respw, pageForIndex)
 }
 
-func handleCashcoreExpenseGeneric(respw http.ResponseWriter, req *http.Request) {
-    fmt.Println("Cashcore's Expense APIs requested.")
-    fmt.Println(cashcore.CreateExpenseAPI("chevron gas"))
+func handleCashCoreExpenseGet(respw http.ResponseWriter, req *http.Request) {
+    fmt.Println("Cashcore's Expense Get API requested.")
+    params := mux.Vars(req)
+
+    fmt.Println("Getting " + params["id"])
+    json.NewEncoder(respw).Encode(&cashcore.Expense{})
+}
+
+func handleCashCoreExpenseCreate(respw http.ResponseWriter, req *http.Request) {
+    fmt.Println("Cashcore's Expense Create API requested.")
+    params := mux.Vars(req)
+
+    fmt.Println("Creating " + params["id"])
+    json.NewEncoder(respw).Encode(&cashcore.Expense{})
+}
+
+func handleCashCoreExpenseDelete(respw http.ResponseWriter, req *http.Request) {
+    fmt.Println("Cashcore's Expense Delete API requested.")
+    params := mux.Vars(req)
+
+    fmt.Println("Deleting " + params["id"])
+    json.NewEncoder(respw).Encode(&cashcore.Expense{})
 }
 
 func main () {
-	http.HandleFunc("/", handleIndex)
-	http.HandleFunc("/expense", handleCashcoreExpenseGeneric)
+    muxRouter := mux.NewRouter()
+
+    // DASHBOARD - Home
+    muxRouter.HandleFunc("/", handleDashboardIndex).Methods("GET")
+
+    // CASHCORE - Expense
+    muxRouter.HandleFunc("/expense/{id}", handleCashCoreExpenseGet).Methods("GET")
+    muxRouter.HandleFunc("/expense/{id}", handleCashCoreExpenseCreate).Methods("POST")
+    muxRouter.HandleFunc("/expense/{id}", handleCashCoreExpenseDelete).Methods("DELETE")
 
 	fmt.Println("STATUS :: Cashtrack Webserver is up and listening for requests...")
 
-	http.ListenAndServe(":8080", nil)
+    log.Fatal(http.ListenAndServe(":8080", muxRouter))
 }
