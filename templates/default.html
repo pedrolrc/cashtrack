@@ -13,8 +13,23 @@
 	</head>
 	<body>
 		<h1>Welcome to the Cash Track Web App</h1>
-		<p>
-			Who's seeing this?<br/>
+		<div align="left">Current financial period: March 1st to March 31st</div>
+
+		<div id="stupidform" style="float: left; width: 49%;">
+		<p>	
+			<h3>Daily Overview</h3>
+			
+			<ul>
+				<li>How much you've earned this period: $3,650.00</li>
+				<li>How much you've spent so far: $2,320.67</li>
+				<li>Amount still expected: $472.00</li>
+				<li>Extrapolted budgets: Food (+$65.65), Gas (+$23.14), Home (+$79.00)</li>
+				<li>Amount of non-expected costs: ...</li>
+				<li>Amount of exptected costs: ...</li>
+				<li>This period you are likely to save: $689.54</li>
+				<li>Last period you saved: $1404.03 (+%24.65)</li>
+				<li>You will have to save $345.99 more next period to make up for your current periodically saving target amount</li>
+			</ul>
 
 			<form method="POST">
 				<div class="input-group">
@@ -34,8 +49,27 @@
 		<ul>
 			<li><a href="/tracker">Log cost</a></li>
 			<li><a href="">Show recent logged cost</a></li>
+			<li><a href="">View previous periods</a></li>
+			<li><a href="">Stats</a></li>
+			<li><a href="">Import Bank Statements</a></li>
 		</ul>
-		
+		</div>
+
+		<div id="upcomingcosts" style="float: right; width: 49%;">
+			<h3>These upcoming costs won't surprise you anymore</h3>
+			<table border="1">
+				<tr>
+					<th>Date</th>
+					<th>Description</th>
+					<th>Amount</th>
+				<tr>
+				<tr>
+					<td>3/14/2017</td>
+					<td>Texas Flights</td>
+					<td>1,500.00</td>
+			</table>
+		</div>
+
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     		<!-- Include all compiled plugins (below), or include individual files as needed -->
